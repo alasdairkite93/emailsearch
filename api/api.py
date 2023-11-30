@@ -9,7 +9,6 @@ from urllib.parse import urljoin, urlparse
 
 app = Flask(__name__)
 
-
 # Flask is started using yarn start-api (name of script in package.json)
 
 @app.route('/time', methods=['GET', 'POST'])
@@ -45,6 +44,10 @@ def post_file():
         emails = crawl.search(convert_li)
         print('FINAL RETURNING EMAILS: ', emails)
     return emails
+
+@app.route('/', methods=['GET', 'POST'])
+def flaks():
+    return 'FLASK is running'
 
 class Crawler:
 
@@ -131,3 +134,6 @@ class Crawler:
             count+=1
 
         return emails
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=3001)
