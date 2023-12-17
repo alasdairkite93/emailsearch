@@ -1,13 +1,16 @@
 import time
-from flask import Flask
+from flask import Flask, render_template
 from flask import request
 import json
 import re
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
+import os
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Flask is started using yarn start-api (name of script in package.json)
 
@@ -45,9 +48,9 @@ def post_file():
         print('FINAL RETURNING EMAILS: ', emails)
     return emails
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/testpl', methods=['GET', 'POST'])
 def flaks():
-    return 'FLASK is running'
+    return render_template('index.html')
 
 class Crawler:
 
@@ -136,4 +139,5 @@ class Crawler:
         return emails
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3001)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
